@@ -2036,12 +2036,12 @@ spawn(function()
     end)
 
     local PlantingList = {}
-    getgenv().itemsData = require(game:GetService("ReplicatedStorage").Modules.ItemData)
-    for i, v in pairs(getrenv()._G.data.inventory) do
-        if itemsData[v.name].nourishment then
-            table.insert(PlantingList,v.name)
-        end
-    end
+    --getgenv().itemsData = require(game:GetService("ReplicatedStorage").Modules.ItemData)
+    --for i, v in pairs(getrenv()._G.data.inventory) do
+    --    if itemsData[v.name].nourishment then
+    --        table.insert(PlantingList,v.name)
+    --    end
+    --end
     local selectedplant2
     Farmm:CreateDropdown('Select Plant - 2', PlantingList, function(output)
         selectedplant2 = output
@@ -3699,22 +3699,15 @@ spawn(function()
                                     local enemyHRP = player.Character:FindFirstChild("HumanoidRootPart")
                                     if enemyHRP then
                                         if (HRP.Position - enemyHRP.Position).Magnitude < nearRadius then
-                                            if getgenv().NormalWorld == true then
-                                                for i, v in pairs(getrenv()._G.data.inventory) do
-                                                    if itemsData[v.name].nourishment then
-                                                        if v.name == selectedfruit1 or v.name == selectedfruit2 then
-                                                            game:GetService("ReplicatedStorage").Events.UseBagItem:FireServer(i)
-                                                        end
-                                                    end
+                                            if selectedFood then
+                                                local itemIndex = table.find(populateEatList(), selectedFood)
+                                                if itemIndex then
+                                                    useSelectedItem(itemIndex)
+                                                else
+                                                    --print("Selected food item not found in eatlist.")
                                                 end
-                                            elseif getgenv().NormalWorld == false then
-                                                local slcfruits = {
-                                                    selectedfruit1,
-                                                    selectedfruit2
-                                                }
-                                                for _, fruit in pairs(slcfruits) do
-                                                    game:GetService("ReplicatedStorage").Events.UseBagltem:FireServer(fruit)
-                                                end
+                                            else
+                                                --print("No food item selected.")
                                             end
                                         end
                                     end
