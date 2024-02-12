@@ -4,12 +4,22 @@ local Window = DEVIL_UI_Library:CreateWindow("YT - DEVIL Script", game:GetServic
 
 local MainFarm = Window:CreateTab("Main")
 
-MainFarm:CreateSlider('Distance of Mob Farming', {
+
+MainFarm:CreateSlider('Jump Power', {
     Min = 1,
     Max = 500,
-    Default = 30
+    Default = 0
 }, function(value)
-    getgenv().MobDistanceChanger = value
+    getgenv().JumpPowerChanger = value
+    spawn(function()
+        while wait() do
+            pcall(function()
+                spawn(function()
+                    game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().JumpPowerChanger
+                end)
+            end)
+        end
+    end)
 end)
 
 getgenv().autoattackmobs = false
@@ -35,7 +45,7 @@ MainFarm:CreateToggle("Auto Attack Mobs Normal World", function(bool)
                                             local mobPosition = mobModel:FindFirstChild("HumanoidRootPart") and mobModel.HumanoidRootPart.Position
                                             if mobPosition then
                                                 local distance = (playerPosition - mobPosition).Magnitude
-                                                if distance <= getgenv().MobDistanceChanger or 20 then
+                                                if distance <= 50 then
                                                     enemiesNear = true
                                                     table.insert(enemiesToAttack, mobModel)
                                                 end
@@ -107,7 +117,7 @@ MainFarm:CreateToggle("Auto Attack Mobs Wave World", function(bool)
                                             for _, enemyModel in ipairs(enemiesToAttack) do
                                                 local diedValue = enemyModel:FindFirstChild("Died")
                                                 if diedValue and diedValue:IsA("BoolValue") and not diedValue.Value then
-                                                    enemyModel.CFrame = player.Character.HumanoidRootPart.CFrame - Vector3.new(25, 0, 0)
+                                                    enemyModel.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame - Vector3.new(25, 0, 0)
                                                     game:GetService("ReplicatedStorage").Attack:FireServer(enemyModel)
                                                 end
                                             end
@@ -117,12 +127,15 @@ MainFarm:CreateToggle("Auto Attack Mobs Wave World", function(bool)
                             end
                         end
                     end
+
+
                 end)
                 wait()
             end
         end)
     end
 end)
+
 
 getgenv().autoccd = false
 MainFarm:CreateToggle("Auto Collect Coins, Diamonds", function(bool)
