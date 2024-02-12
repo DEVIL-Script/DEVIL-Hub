@@ -151,6 +151,7 @@ MainFarm:CreateToggle("Auto Collect Coins, Diamonds", function(bool)
                     local function teleportBasePartsInFolder(folder, position)
                         for _, part in ipairs(folder:GetChildren()) do
                             if part:IsA("BasePart") then
+                                game:GetService("ReplicatedStorage").DiaCollect:FireServer(1)
                                 teleportPartTo(part, position)
                             end
                         end
@@ -159,6 +160,7 @@ MainFarm:CreateToggle("Auto Collect Coins, Diamonds", function(bool)
                     for _, folderName in ipairs(foldersToSearch) do
                         local folder = game.Workspace:FindFirstChild(folderName)
                         if folder then
+                            game:GetService("ReplicatedStorage").DiaCollect:FireServer(1)
                             teleportBasePartsInFolder(folder, rootPart.Position)
                         end
                     end
