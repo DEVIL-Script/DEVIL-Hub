@@ -1,5 +1,3 @@
-
-
 local DEVIL_UI_Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/DEVIL-Script/DEVIL-Ui/main/DEVIL-Ui-Lib", true))()
 
 local Window = DEVIL_UI_Library:CreateWindow("YT - DEVIL Script", game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name)
@@ -7,69 +5,8 @@ local Window = DEVIL_UI_Library:CreateWindow("YT - DEVIL Script", game:GetServic
 local MainFarm = Window:CreateTab("Main")
 
 
-
-getgenv().autoattackmobs2 = false
-MainFarm:CreateToggle("Auto Attack Mobs Wave World", function(bool)
-    getgenv().autoattackmobs2 = bool
-    if bool then
-        spawn(function()
-            while autoattackmobs2 do
-                pcall(function()
-                    local player = game.Players.LocalPlayer
-                    local playerPosition = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character.HumanoidRootPart.Position
-
-                    if playerPosition then
-                        -- Iterate through all children of the workspace
-                        for _, folder1 in ipairs(game.Workspace:GetChildren()) do
-                            -- Check if the folder's name contains "bossroom" (case insensitive)
-                            if folder1:IsA("Folder") and string.find(string.lower(folder1.Name), "bossroom") then
-                                -- Iterate through all subfolders of the bossroom folder
-                                for _, subFolder in ipairs(folder1:GetChildren()) do
-                                    local mobsFolder = subFolder:FindFirstChild("Mobs")
-                                    if mobsFolder then
-                                        local enemiesNear = false
-                                        local enemiesToAttack = {}
-                                        
-                                        -- Check if any enemy is near
-                                        for _, mobModel in ipairs(mobsFolder:GetChildren()) do
-                                            if mobModel:IsA("Model") then
-                                                local mobPosition = mobModel:FindFirstChild("HumanoidRootPart") and mobModel.HumanoidRootPart.Position
-                                                if mobPosition then
-                                                    local distance = (playerPosition - mobPosition).Magnitude
-                                                    if distance <= 100 then
-                                                        enemiesNear = true
-                                                        table.insert(enemiesToAttack, mobModel)
-                                                    end
-                                                end
-                                            end
-                                        end
-                                        
-                                        -- If enemies are near, attack them all at once
-                                        if enemiesNear then
-                                            for _, enemyModel in ipairs(enemiesToAttack) do
-                                                local diedValue = enemyModel:FindFirstChild("Died")
-                                                if diedValue and diedValue:IsA("BoolValue") and not diedValue.Value then
-                                                    enemyModel.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                                                    game:GetService("ReplicatedStorage").Attack:FireServer(enemyModel)
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-
-
-                end)
-                wait()
-            end
-        end)
-    end
-end)
-
 getgenv().autoattackmobs = false
-MainFarm:CreateToggle("Auto Attack Mobs", function(bool)
+MainFarm:CreateToggle("Auto Attack Mobs Normal World", function(bool)
     getgenv().autoattackmobs = bool
     if bool then
         spawn(function()
@@ -120,6 +57,64 @@ MainFarm:CreateToggle("Auto Attack Mobs", function(bool)
 end)
 
 
+getgenv().autoattackmobs2 = false
+MainFarm:CreateToggle("Auto Attack Mobs Wave World", function(bool)
+    getgenv().autoattackmobs2 = bool
+    if bool then
+        spawn(function()
+            while autoattackmobs2 do
+                pcall(function()
+                    local player = game.Players.LocalPlayer
+                    local playerPosition = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character.HumanoidRootPart.Position
+
+                    if playerPosition then
+                        -- Iterate through all children of the workspace
+                        for _, folder1 in ipairs(game.Workspace:GetChildren()) do
+                            -- Check if the folder's name contains "bossroom" (case insensitive)
+                            if folder1:IsA("Folder") and string.find(string.lower(folder1.Name), "bossroom") then
+                                -- Iterate through all subfolders of the bossroom folder
+                                for _, subFolder in ipairs(folder1:GetChildren()) do
+                                    local mobsFolder = subFolder:FindFirstChild("Mobs")
+                                    if mobsFolder then
+                                        local enemiesNear = false
+                                        local enemiesToAttack = {}
+                                        
+                                        -- Check if any enemy is near
+                                        for _, mobModel in ipairs(mobsFolder:GetChildren()) do
+                                            if mobModel:IsA("Model") then
+                                                local mobPosition = mobModel:FindFirstChild("HumanoidRootPart") and mobModel.HumanoidRootPart.Position
+                                                if mobPosition then
+                                                    local distance = (playerPosition - mobPosition).Magnitude
+                                                    if distance <= 50 then
+                                                        enemiesNear = true
+                                                        table.insert(enemiesToAttack, mobModel)
+                                                    end
+                                                end
+                                            end
+                                        end
+                                        
+                                        -- If enemies are near, attack them all at once
+                                        if enemiesNear then
+                                            for _, enemyModel in ipairs(enemiesToAttack) do
+                                                local diedValue = enemyModel:FindFirstChild("Died")
+                                                if diedValue and diedValue:IsA("BoolValue") and not diedValue.Value then
+                                                    game:GetService("ReplicatedStorage").Attack:FireServer(enemyModel)
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+
+
+                end)
+                wait()
+            end
+        end)
+    end
+end)
 
 getgenv().autoccd = false
 MainFarm:CreateToggle("Auto Collect Coins, Diamonds", function(bool)
@@ -153,4 +148,3 @@ MainFarm:CreateToggle("Auto Collect Coins, Diamonds", function(bool)
         end)
     end
 end)
-
