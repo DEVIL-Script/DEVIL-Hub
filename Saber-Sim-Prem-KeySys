@@ -1,0 +1,6 @@
+
+--Get Key For Premium Script From Here: https://ads.luarmor.net/get_key?for=DEVIL_Script_Premium-LWdbEroSFsyg
+
+script_key = "Place-Your-Key-Here";
+
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d6294bcb92c1182fd1aeb87dfff724d2.lua"))()
