@@ -1,6 +1,4 @@
 
---Get Key For Premium Script From Here: https://ads.luarmor.net/get_key?for=DEVIL_Script_Premium-LWdbEroSFsyg
+--Execute Script and click Platoboost(IP Address) or Platoboost(Userid) and paste the link in browser to get a key.
 
-script_key = "Place-Your-Key-Here";
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d6294bcb92c1182fd1aeb87dfff724d2.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DEVIL-Script/DEVIL-Hub/main/DEVIL-Hub-Main", true))()
