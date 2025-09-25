@@ -1,4 +1,5 @@
 
 --Execute Script and click Platoboost(IP Address) or Platoboost(Userid) and paste the link in browser to get a key.
+--Or dm @dpsvil in discord to purchase Premium for 15$ or buy https://www.roblox.com/game-pass/1252491042/Unlock-the-full-experience-with-Premium to get direct access
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/DEVIL-Script/DEVIL-Hub/main/DEVIL-Hub-Main", true))()
