@@ -242,3 +242,7 @@ local function aesCBCDecrypt(keyHex, ivHex, encHex)
     result = removePKCS7Padding(result)
     return bytesToString(result)
 end
+
+return {
+    aesCBCDecrypt = aesCBCDecrypt
+}
