@@ -85,7 +85,7 @@ local codes = {
     "BRUH",
     "FREECHARMS",
     "FRIED",
-    "",
+    "CRISPY",
     "",
     "",
     "",
